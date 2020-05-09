@@ -59,6 +59,10 @@ public class Tile {
         return false;
     }
 
+    public boolean isInsideBody(Point p){
+        return body.contains(p.x, p.y);
+    }
+
     public void draw(){
         if(!clicked)
             canvas.drawRect(body, defaultPaint);
