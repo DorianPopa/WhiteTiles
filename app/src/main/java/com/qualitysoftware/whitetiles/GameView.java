@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -28,6 +30,9 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean gameHasEnded = false;
     private int gameSpeed = 5;
 
+    private int score = 0;
+    private int combo = 0;
+
     public GameView(Context context) {
         super(context);
         init(context);
@@ -46,7 +51,7 @@ public class GameView extends SurfaceView implements Runnable {
         int tileHeight = canvas.getHeight() / 4;
 
         Paint newPaint = new Paint();
-        newPaint.setColor(Color.GREEN);
+        newPaint.setColor(Color.parseColor("#006300"));
         newPaint.setStrokeWidth(lineWidth);
 
         canvas.drawLine(tileWidth - lineWidth / 2, 0, tileWidth - lineWidth / 2, canvas.getHeight(), newPaint);
@@ -66,12 +71,12 @@ public class GameView extends SurfaceView implements Runnable {
             Tile t = iter.next();
             if(t.isOutsideOfScreen()){
                 if(!t.isClicked()){
-                    Log.d("Tile Update", "Tile " + t.toString() + " is not clicked and outside of screen, game has ended\n");
-                    //gameHasEnded = true;
-                    //break;
+                    Log.d("Tile Update", "Tile " + t.toString() + " is NOT clicked and outside of screen, game has ended\n");
+                    gameHasEnded = true;
+                    break;
                 }
                 else{
-                    Log.d("Tile Update", "Tile: " + t.toString() + " is not clicked and outside of screen, will be removed\n");
+                    Log.d("Tile Update", "Tile: " + t.toString() + " is clicked and outside of screen, will be removed\n");
                     iter.remove();
                 }
             }
@@ -80,6 +85,40 @@ public class GameView extends SurfaceView implements Runnable {
                 t.draw();
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        Point touchCoords = new Point((int)(event.getX()), (int)(event.getY()));
+        boolean clickedOnActualTile = false;
+        for(Tile t : tileList){
+            if(t.isInsideBody(touchCoords)){
+                if(!t.isClicked()){
+                    t.click();
+                    clickedOnActualTile = true;
+                    score += gameSpeed;
+                    combo += 1;
+                    if(combo % 10 == 0){
+                        gameSpeed *= 1.5;
+                        Log.d("GameEvent", "Speed increased to " + gameSpeed);
+                    }
+                    break;
+                }
+                else{
+                    gameHasEnded = true;
+                }
+            }
+        }
+        if(!clickedOnActualTile)
+            gameHasEnded = true;
+
+        performClick();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override
