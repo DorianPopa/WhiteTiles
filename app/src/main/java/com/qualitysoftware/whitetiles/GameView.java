@@ -27,6 +27,8 @@ public class GameView extends SurfaceView implements Runnable {
     private  TileRowGenerator rowGenerator;
     List<Tile> tileList = new ArrayList<Tile>();
 
+    SoundManager soundManager;
+
     private boolean gameHasEnded = false;
     private int gameSpeed = 5;
 
@@ -41,6 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void init(Context _context){
         context = _context;
         surfaceHolder = getHolder();
+        soundManager = new SoundManager(context);
         setZOrderOnTop(true);
     }
 
@@ -96,6 +99,8 @@ public class GameView extends SurfaceView implements Runnable {
                 if(!t.isClicked()){
                     t.click();
                     clickedOnActualTile = true;
+                    soundManager.playSound(1);
+
                     score += gameSpeed;
                     combo += 1;
                     if(combo % 10 == 0){
