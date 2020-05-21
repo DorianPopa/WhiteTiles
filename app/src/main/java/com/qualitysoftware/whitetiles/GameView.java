@@ -1,6 +1,8 @@
 package com.qualitysoftware.whitetiles;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -176,6 +178,13 @@ public class GameView extends SurfaceView implements Runnable {
             drawGuideLines(canvas);
             drawScore(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+
+        if(gameHasEnded){
+            Intent intent = new Intent(context, GameEndedActivity.class);
+            intent.putExtra("score", score);
+            this.context.startActivity(intent);
+            ((Activity) context).finish();
         }
     }
 

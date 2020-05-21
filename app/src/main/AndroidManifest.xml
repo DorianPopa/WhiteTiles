@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".GameEndedActivity"
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
+        <activity
             android:name=".GameActivity"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen"/>
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
