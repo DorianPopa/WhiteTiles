@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -62,6 +65,29 @@ public class GameView extends SurfaceView implements Runnable {
         canvas.drawLine(2 * tileWidth - lineWidth / 2, 0, 2 * tileWidth - lineWidth / 2, canvas.getHeight(), newPaint);
 
         canvas.drawLine(3 * tileWidth - lineWidth / 2, 0, 3 * tileWidth - lineWidth / 2, canvas.getHeight(), newPaint);
+    }
+
+    private void drawScore(Canvas canvas){
+        String scoreString = "Score: " + score;
+        String speedString = "Speed: " + gameSpeed;
+
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(32 * getResources().getDisplayMetrics().density);
+        textPaint.setColor(Color.WHITE);
+
+        int scoreStringWidth = (int) textPaint.measureText(scoreString);
+        int speedStringWidth = (int) textPaint.measureText(speedString);
+
+        StaticLayout scoreStaticLayout = new StaticLayout(scoreString, textPaint, scoreStringWidth, Layout.Alignment.ALIGN_CENTER, 1.0f, 0, false);
+        StaticLayout speedStaticLayout = new StaticLayout(speedString, textPaint, speedStringWidth, Layout.Alignment.ALIGN_CENTER, 1.0f, 0, false);
+
+        canvas.translate(0f, 50f);
+        scoreStaticLayout.draw(canvas);
+        canvas.translate(0f,0f);
+
+        canvas.translate((float)(this.canvas.getWidth() - speedStringWidth), 0f);
+        speedStaticLayout.draw(canvas);
+        canvas.translate(0f,0f);
     }
 
     private void drawBackground(Canvas canvas){
@@ -148,7 +174,7 @@ public class GameView extends SurfaceView implements Runnable {
             updateTiles();
 
             drawGuideLines(canvas);
-            // drawScore();
+            drawScore(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
