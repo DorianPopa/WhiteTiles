@@ -60,4 +60,12 @@ public class InternalStorage {
         internalScores.add(scoreEntryToBeAdded);
         writeScoresToInternal(context, internalScores);
     }
+
+    public static void deleteAllScores(Context context){
+        writeScoresToInternal(context, new ArrayList<ScoreEntry>());
+    }
 }
+
+/*
+    TODO: Check the storage flow with a non-existent file (first time run)
+ */
