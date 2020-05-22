@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 public class GameEndedActivity extends AppCompatActivity {
 
     private TextView gameResult;
@@ -23,6 +27,8 @@ public class GameEndedActivity extends AppCompatActivity {
 
         initComponents();
         setClickListenersForButtons();
+
+        updateHighscoreStorage();
     }
 
     private void initComponents(){
@@ -34,7 +40,14 @@ public class GameEndedActivity extends AppCompatActivity {
     }
 
     private void updateHighscoreStorage(){
+        ScoreEntry newScore = new ScoreEntry("" + finalScore, generateTimeStamp());
+        InternalStorage.addNewScoreEntryIntoInternal(this, newScore);
+    }
 
+    private String generateTimeStamp(){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(timestamp);
     }
 
     private void setClickListenersForButtons(){
