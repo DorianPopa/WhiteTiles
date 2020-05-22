@@ -63,13 +63,20 @@ public class GameEndedActivity extends AppCompatActivity {
         findViewById(R.id.mainMenuButton).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GameEndedActivity.this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(GameEndedActivity.this, MainActivity.class);
+                //startActivity(intent);
                 finish();
             }
         });
 
-        //findViewById(R.id.highscoresButton)
+        findViewById(R.id.highscoresButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameEndedActivity.this, HighscoresActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         //findViewById(R.id.shareOnFacebookButton)
 

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".HighscoresActivity"
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
+        <activity
             android:name=".GameEndedActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity

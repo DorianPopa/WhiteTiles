@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setClickListenersForButtons();
+    }
+
+    private void setClickListenersForButtons() {
         findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -22,5 +26,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.highscores).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HighscoresActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
