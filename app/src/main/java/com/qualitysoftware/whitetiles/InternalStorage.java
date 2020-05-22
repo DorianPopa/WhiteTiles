@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class InternalStorage {
     public static void writeScoresToInternal(Context context, ArrayList<ScoreEntry> scores) {
         File scoresFile = new File(context.getFilesDir(), Constants.HIGHSCORES_FILE);
+        Collections.sort(scores);
 
         try {
             if(scoresFile.createNewFile())  Log.d("INTERNAL STORAGE", "New scores file created");

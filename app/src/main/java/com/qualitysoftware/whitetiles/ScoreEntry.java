@@ -2,7 +2,9 @@ package com.qualitysoftware.whitetiles;
 
 import java.io.Serializable;
 
-public class ScoreEntry implements Serializable {
+import static java.lang.Integer.parseInt;
+
+public class ScoreEntry implements Serializable, Comparable<ScoreEntry>{
     private String value;
     private String time;
 
@@ -17,5 +19,10 @@ public class ScoreEntry implements Serializable {
 
     public String getTime(){
         return time;
+    }
+
+    @Override
+    public int compareTo(ScoreEntry comparesTo) {
+        return parseInt(comparesTo.getValue()) - parseInt(value);
     }
 }
