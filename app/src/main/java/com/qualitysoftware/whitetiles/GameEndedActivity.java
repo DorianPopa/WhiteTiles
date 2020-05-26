@@ -78,7 +78,19 @@ public class GameEndedActivity extends AppCompatActivity {
             }
         });
 
-        //findViewById(R.id.shareOnFacebookButton)
+        findViewById(R.id.shareOnFacebookButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String body = "Я только что набрал " + finalScore + " очков на WhiteTiles. Побей меня, если сможешь!";
+                String title = "WhiteTiles";
+
+                intent.putExtra(Intent.EXTRA_SUBJECT, title);
+                intent.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(Intent.createChooser(intent, "Share your score on..."));
+            }
+        });
 
 
     }
